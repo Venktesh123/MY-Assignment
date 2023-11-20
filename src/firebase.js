@@ -13,7 +13,11 @@ const firebaseConfig = {
   storageBucket: "shoppinglist-895b4.appspot.com",
   messagingSenderId: "849104576221",
   appId: "1:849104576221:web:4aa1ea23de3041fbc34534",
-  measurementId: "G-P0LKT8KT1J"
+  measurementId: "G-P0LKT8KT1J",
+  databaseURL:'https://shoppinglist-895b4-default-rtdb.firebaseio.com'
+  
+  
+
 };
 
 // Initialize Firebase

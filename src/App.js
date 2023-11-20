@@ -5,6 +5,7 @@ import Signup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
 import Firedata from './components/Firedata';
 import List from './components/List';
+import ShowList from './components/ShowList/ShowList';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/firedata" element={<Firedata/>}/>
           <Route path="/add/list" element={<List/>}/>
+          <Route path="/show/list" element={<ShowList/>}/>
           
         </Routes>
       </Router>

@@ -3,25 +3,26 @@ import { ref, push, getDatabase } from 'firebase/database';
 import { app } from "../firebase";
 import styles from "./List.module.css";
 
-
 const db = getDatabase(app);
 
 function List() {
-
   const [values, setValues] = useState({
     product_id: '',
     product_name: '',
     price: '',
     quantity: ''
+
   });
 
   const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
+  const [isPurchased, setIsPurchased] = useState(false); // State for tracking whether the product has been purchased
 
   const putData = async () => {
     try {
       const newProductRef = push(ref(db, 'product/sale'), values);
       console.log('Data pushed with key:', newProductRef.key);
       setShowPopup(true); // Show the popup
+      setIsPurchased(true); // Set the state to indicate that the product has been purchased
     } catch (error) {
       console.error('Error pushing data:', error.message);
     }
@@ -49,9 +50,11 @@ function List() {
   };
 
   return (
-    <div >
+    <div className={styles.formStyle}>
+      
       <form onSubmit={handleSubmit}>
         {/* InputControl components */}
+        <h3>Database Data</h3>
         <input
           type="text"
           name="product_id"
@@ -89,6 +92,7 @@ function List() {
         <div className="popup">
           <div className="popup-content">
             <p>Data submitted successfully!</p>
+            <p>{isPurchased ? "Product purchased!" : "Product not purchased yet."}</p>
             <button onClick={closePopup}>Close</button>
           </div>
         </div>

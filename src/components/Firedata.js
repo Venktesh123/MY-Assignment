@@ -2,30 +2,22 @@ import React from 'react'
 import {getDatabase,ref,set} from "firebase/database";
 import {app} from '../firebase';
 import { Link } from 'react-router-dom';
-const db=getDatabase(app);
+import styles from "./Firedata.module.css";
 
 function Firedata() {
-    const pushData=()=>{
-        set(ref(db,'product/sale'),{
-            id:1,
-            product_name:"tablet",
-            price:20000
-        });
-    };
+    
   return (
-    <div>
-        FireBase Connect
-      <button onClick={pushData}>Put Data</button>
+    <div className={styles.actionList}>
       <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
+      <ul className={styles.actionUl}>
+        <li className={styles.liTag}>
+          <Link className={styles.linkTag} to="/">Home</Link>
         </li>
-        <li>
-          <Link to="/add/list">Add List Item</Link>
+        <li className={styles.liTag}>
+          <Link className={styles.linkTag} to="/add/list">Add List Item</Link>
         </li>
-        <li>
-          <Link to="/show/list">Contact</Link>
+        <li className={styles.liTag}>
+          <Link className={styles.linkTag} to="/show/list">Show List Item</Link>
         </li>
       </ul>
     </nav>

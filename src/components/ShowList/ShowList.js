@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import styles from "./ShowList.module.css";
 
 // Assuming productsRef is the reference to your database
 const database = getDatabase();
@@ -29,19 +30,20 @@ function ShowList() {
     return () => unsubscribe();
   }, []);
 
-  return (
-    <div>
-      <h2>Product List</h2>
-      <ul>
-        {products.map((product) => (
-          <li key={product.product_id
-          }>
-            <strong>{product.price}</strong> - {product.product_name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+    return (
+        <div className={styles.visible}>
+          <h2 className={styles.alignText}>Product List</h2>
+          <div className={styles.container}>
+            {products.map((product) => (
+              <div key={product.id} className={styles.card}>
+                <p>ProductName:{product.product_name}</p>
+                <p>Price: {product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
 
 export default ShowList;

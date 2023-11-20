@@ -1,67 +1,99 @@
 import { useState } from 'react';
 import { ref, push, getDatabase } from 'firebase/database';
-import  {app} from "../firebase";
-const db=getDatabase(app);
- // Import 'push' from firebase database
+import { app } from "../firebase";
+import styles from "./List.module.css";
 
-// Assuming db is the reference to your Firebase app's Realtime Database
+
+const db = getDatabase(app);
 
 function List() {
+
   const [values, setValues] = useState({
     product_id: '',
     product_name: '',
     price: '',
+    quantity: ''
   });
+
+  const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
 
   const putData = async () => {
     try {
-      // Use 'push' to generate a new unique key for each entry
       const newProductRef = push(ref(db, 'product/sale'), values);
       console.log('Data pushed with key:', newProductRef.key);
+      setShowPopup(true); // Show the popup
     } catch (error) {
       console.error('Error pushing data:', error.message);
     }
   };
 
-  const handleInputChange = (label, value) => {
-    setValues((prev) => ({ ...prev, [label]: value }));
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     putData();
-    // Optionally, you can reset the form fields after submission
     setValues({
       product_id: '',
       product_name: '',
       price: '',
+      quantity: '',
     });
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {/* InputControl components */}
-      <input
-        type="text"
-        placeholder="Enter Product id"
-        value={values.product_id}
-        onChange={(event) => handleInputChange('product_id', event.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Enter Product Name"
-        value={values.product_name}
-        onChange={(event) => handleInputChange('product_name', event.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Enter Price"
-        value={values.price}
-        onChange={(event) => handleInputChange('price', event.target.value)}
-      />
+  const closePopup = () => {
+    setShowPopup(false);
+    window.history.back(); // Redirect to the previous URL after closing the popup
+  };
 
-      <button type="submit">Submit</button>
-    </form>
+  return (
+    <div >
+      <form onSubmit={handleSubmit}>
+        {/* InputControl components */}
+        <input
+          type="text"
+          name="product_id"
+          placeholder="Enter Product id"
+          value={values.product_id}
+          onChange={handleInputChange}
+          required={true}
+        />
+        <input
+          type="text"
+          name="product_name"
+          placeholder="Enter Product Name"
+          value={values.product_name}
+          onChange={handleInputChange}
+          required={true}
+        />
+        <input
+          type="text"
+          name="price"
+          placeholder="Enter Price"
+          value={values.price}
+          onChange={handleInputChange}
+        />
+        <input
+          type="text"
+          name="quantity"
+          placeholder="quantity"
+          value={values.quantity}
+          onChange={handleInputChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
+
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <p>Data submitted successfully!</p>
+            <button onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+  .alignText{
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    margin: 0;
+    padding: 1rem;
+}
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    width: 200px;
+    box-shadow: 0 0px 10px white;
+    background-color: #FBE9E7;
+    
+  }
+  .visible{
+    background-color: #263238;
+    min-height: 100vh;
+  }

@@ -19,7 +19,6 @@ function App() {
           <Route path="/firedata" element={<Firedata/>}/>
           <Route path="/add/list" element={<List/>}/>
           <Route path="/show/list" element={<ShowList/>}/>
-          
         </Routes>
       </Router>
     </div>

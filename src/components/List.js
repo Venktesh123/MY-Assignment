@@ -54,7 +54,7 @@ function List() {
       
       <form onSubmit={handleSubmit}>
         {/* InputControl components */}
-        <h3>Database Data</h3>
+        <h3>Product Information</h3>
         <input
           type="text"
           name="product_id"

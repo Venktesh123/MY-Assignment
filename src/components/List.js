@@ -86,9 +86,7 @@ function List() {
           onChange={handleInputChange}
         />
         <button type="submit">Submit</button>
-      </form>
-
-      {showPopup && (
+        {showPopup && (
         <div className="popup">
           <div className="popup-content">
             <p>Data submitted successfully!</p>
@@ -97,6 +95,17 @@ function List() {
           </div>
         </div>
       )}
+      </form>
+
+      {/* {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <p>Data submitted successfully!</p>
+            <p>{isPurchased ? "Product purchased!" : "Product not purchased yet."}</p>
+            <button onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }

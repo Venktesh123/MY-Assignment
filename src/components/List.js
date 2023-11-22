@@ -10,27 +10,30 @@ function List() {
     product_id: '',
     product_name: '',
     price: '',
-    quantity: ''
-
+    quantity: '',
+    ispurchased: false, // Use a boolean value for ispurchased
   });
 
-  const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
-  const [isPurchased, setIsPurchased] = useState(false); // State for tracking whether the product has been purchased
+  const [showPopup, setShowPopup] = useState(false);
+  const [isPurchased, setIsPurchased] = useState(false);
 
   const putData = async () => {
     try {
-      const newProductRef = push(ref(db, 'product/sale'), values);
-      console.log('Data pushed with key:', newProductRef.key);
-      setShowPopup(true); // Show the popup
-      setIsPurchased(true); // Set the state to indicate that the product has been purchased
+      await push(ref(db, 'product/sale'), values);
+      console.log('Data pushed successfully');
+      setShowPopup(true);
+      setIsPurchased(values.ispurchased); // Set isPurchased based on the value in the form
     } catch (error) {
       console.error('Error pushing data:', error.message);
     }
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = event.target;
+    setValues((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? event.target.checked : value,
+    }));
   };
 
   const handleSubmit = (event) => {
@@ -41,19 +44,18 @@ function List() {
       product_name: '',
       price: '',
       quantity: '',
+      ispurchased: false,
     });
   };
 
   const closePopup = () => {
     setShowPopup(false);
-    window.history.back(); // Redirect to the previous URL after closing the popup
+    window.history.back();
   };
 
   return (
     <div className={styles.formStyle}>
-      
       <form onSubmit={handleSubmit}>
-        {/* InputControl components */}
         <h3>Product Information</h3>
         <input
           type="text"
@@ -61,7 +63,7 @@ function List() {
           placeholder="Enter Product id"
           value={values.product_id}
           onChange={handleInputChange}
-          required={true}
+          required
         />
         <input
           type="text"
@@ -69,7 +71,7 @@ function List() {
           placeholder="Enter Product Name"
           value={values.product_name}
           onChange={handleInputChange}
-          required={true}
+          required
         />
         <input
           type="text"
@@ -85,6 +87,15 @@ function List() {
           value={values.quantity}
           onChange={handleInputChange}
         />
+        <label>
+          <input
+            type="checkbox"
+            name="ispurchased"
+            checked={values.ispurchased}
+            onChange={handleInputChange}
+          />
+          Product purchased
+        </label>
         <button type="submit">Submit</button>
         {showPopup && (
         <div className="popup">

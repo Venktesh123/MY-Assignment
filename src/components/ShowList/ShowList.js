@@ -5,7 +5,6 @@ import styles from "./ShowList.module.css";
 const database = getDatabase();
 const productsRef = ref(database, 'product/sale');
 
-// ... (your existing imports)
 
 function ShowList() {
   const [products, setProducts] = useState([]);
@@ -28,7 +27,6 @@ function ShowList() {
   }, []);
 
   const handleDelete = (productId) => {
-    // Assuming you have a 'product' node in your database
     // and you want to delete the product based on its ID
     const productToDeleteRef = ref(database, `product/sale/${productId}`);
     // Remove the product from the database

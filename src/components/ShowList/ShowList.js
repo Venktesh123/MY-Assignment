@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue,set } from 'firebase/database';
 import styles from "./ShowList.module.css";
 
 const database = getDatabase();
 const productsRef = ref(database, 'product/sale');
+
+// ... (your existing imports)
 
 function ShowList() {
   const [products, setProducts] = useState([]);
@@ -25,6 +27,14 @@ function ShowList() {
     return () => unsubscribe();
   }, []);
 
+  const handleDelete = (productId) => {
+    // Assuming you have a 'product' node in your database
+    // and you want to delete the product based on its ID
+    const productToDeleteRef = ref(database, `product/sale/${productId}`);
+    // Remove the product from the database
+    set(productToDeleteRef, null);
+  };
+
   return (
     <div className={styles.visible}>
       <h2 className={styles.alignText}>Product List</h2>
@@ -39,6 +49,7 @@ function ShowList() {
             ) : (
               <p>Unpurchased Product</p>
             )}
+            <button onClick={() => handleDelete(product.id)}>Delete</button>
           </div>
         ))}
       </div>
@@ -47,3 +58,5 @@ function ShowList() {
 }
 
 export default ShowList;
+
+
